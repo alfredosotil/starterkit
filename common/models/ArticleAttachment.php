@@ -85,4 +85,6 @@ class ArticleAttachment extends ActiveRecord
     {
         return $this->base_url . '/' . $this->path;
     }
+
+
 }

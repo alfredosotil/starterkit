@@ -27,7 +27,6 @@ use yii\db\ActiveRecord;
  */
 class WidgetCarouselItem extends ActiveRecord
 {
-
     /**
      * @var array|null
      */
@@ -44,7 +43,8 @@ class WidgetCarouselItem extends ActiveRecord
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $key = array_search('carousel_id', $scenarios[self::SCENARIO_DEFAULT], true);
+        $key = array_search('carousel_id', $scenarios[self::SCENARIO_DEFAULT],
+            true);
         $scenarios[self::SCENARIO_DEFAULT][$key] = '!carousel_id';
         return $scenarios;
     }
@@ -57,7 +57,7 @@ class WidgetCarouselItem extends ActiveRecord
                 'class' => UploadBehavior::className(),
                 'attribute' => 'image',
                 'pathAttribute' => 'path',
-                'baseUrlAttribute' => Yii::$app->urlManagerStorage->createAbsoluteUrl('/').'base_url',
+                'baseUrlAttribute' => 'base_url',
                 'typeAttribute' => 'type'
             ],
             'cacheInvalidate' => [
@@ -113,7 +113,8 @@ class WidgetCarouselItem extends ActiveRecord
      */
     public function getCarousel()
     {
-        return $this->hasOne(WidgetCarousel::className(), ['id' => 'carousel_id']);
+        return $this->hasOne(WidgetCarousel::className(),
+                ['id' => 'carousel_id']);
     }
 
     /**
@@ -121,6 +122,10 @@ class WidgetCarouselItem extends ActiveRecord
      */
     public function getImageUrl()
     {
-        return rtrim($this->base_url, '/') . '/' . ltrim($this->path, '/');
+        return rtrim($this->base_url, '/').'/'.ltrim($this->path, '/');
+    }
+
+    public function getBaseUrl(){
+        return Yii::$app->urlManagerStorage->createAbsoluteUrl('/');
     }
 }

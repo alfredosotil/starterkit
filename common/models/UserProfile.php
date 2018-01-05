@@ -42,7 +42,7 @@ class UserProfile extends ActiveRecord
                 'class' => UploadBehavior::className(),
                 'attribute' => 'picture',
                 'pathAttribute' => 'avatar_path',
-                'baseUrlAttribute' => Yii::$app->urlManagerStorage->createAbsoluteUrl('/'). 'avatar_base_url'
+                'baseUrlAttribute' => 'avatar_base_url'
             ]
         ];
     }
@@ -113,7 +113,11 @@ class UserProfile extends ActiveRecord
      */
     public function getAvatar($default = null)
     {
-        return $this->avatar_path ? Yii::getAlias(Yii::$app->urlManagerStorage->createAbsoluteUrl('/').$this->avatar_base_url.'/'.$this->avatar_path)
+        return $this->avatar_path ? Yii::getAlias($this->avatar_base_url.'/'.$this->avatar_path)
                 : $default;
+    }
+
+    public function getAvatarBaseUrl(){
+        return Yii::$app->urlManagerStorage->createAbsoluteUrl('/');
     }
 }

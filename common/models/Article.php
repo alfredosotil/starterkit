@@ -84,7 +84,7 @@ class Article extends ActiveRecord
                 'multiple' => true,
                 'uploadRelation' => 'articleAttachments',
                 'pathAttribute' => 'path',
-                'baseUrlAttribute' => Yii::$app->urlManagerStorage->createAbsoluteUrl('/').'base_url',
+                'baseUrlAttribute' => 'base_url',
                 'orderAttribute' => 'order',
                 'typeAttribute' => 'type',
                 'sizeAttribute' => 'size',
@@ -94,7 +94,7 @@ class Article extends ActiveRecord
                 'class' => UploadBehavior::className(),
                 'attribute' => 'thumbnail',
                 'pathAttribute' => 'thumbnail_path',
-                'baseUrlAttribute' => Yii::$app->urlManagerStorage->createAbsoluteUrl('/').'thumbnail_base_url'
+                'baseUrlAttribute' => 'thumbnail_base_url'
             ]
         ];
     }
@@ -173,5 +173,13 @@ class Article extends ActiveRecord
     public function getArticleAttachments()
     {
         return $this->hasMany(ArticleAttachment::className(), ['article_id' => 'id']);
+    }
+
+    public function getBaseUrl(){
+        return Yii::$app->urlManagerStorage->createAbsoluteUrl('/');
+    }
+    
+    public function getThumbnailBaseUrl(){
+        return Yii::$app->urlManagerStorage->createAbsoluteUrl('/');
     }
 }
